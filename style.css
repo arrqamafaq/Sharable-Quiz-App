@@ -6,4 +6,105 @@
 html,body{
     width: 100%;
     height: 100%;
+    /* font-family: "poppins",sans-serif, serif; */
+    font-family: "Playwrite PE", sans-serif,serif;
+    background-color: #161616;
+    color: white;
+}
+header{
+    /* background-color: pink; */
+    padding: 32px;
+    min-height: 20%;
+    text-align: center;
+    color: #cf83fcaf;
+    font-family: "Playwrite PE", sans-serif,serif;
+    font-size: 1.5vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+li{
+    list-style: none;
+    width:70%;
+    max-width: 854px;
+    background-color: rgb(32, 32, 32);
+    padding:20px 30px;
+    box-shadow: rgba(167, 166, 166, 0.16) 0px 3px 6px, rgba(173, 173, 173, 0.452) 0px 3px 6px;
+    border-radius: 30px;
+    margin: 40px auto;
+}
+li h4{
+    font-size: 22px;
+    font-weight: 500;
+}
+li.incorrect{
+    box-shadow: rgba(179, 5, 5, 0.726) 0px 3px 6px, rgba(150, 23, 23, 0.452) 0px 3px 6px;
+}
+li.incorrect .incorrect-option{
+    color: rgb(206, 9, 9);
+
+}
+li.correct{
+    box-shadow: rgba(59, 179, 4, 0.726) 0px 3px 6px, rgba(150, 23, 23, 0.452) 0px 3px 6px;
+}
+li.correct .correct-option{
+    color: rgb(68, 204, 5);
+
+}
+
+.submit-btn{
+    font-family: "Playwrite PE", sans-serif,serif;
+    padding: 10px 20px;
+    font-size: 18px;
+    font-weight: 400;
+    background-color: #cf83fcaf;
+    border: none;
+    box-shadow: rgba(167, 166, 166, 0.16) 0px 3px 6px, rgba(173, 173, 173, 0.452) 0px 3px 6px;
+    border-radius: 20px;
+    color: white;
+    position: relative;
+    left:50%;
+    transform: translateX(-50%);
+    margin-top: 30px;
+    cursor: pointer;
+    margin-bottom: 40px;
+    &:hover{
+        opacity: .7;
+    }
+    
+}
+.optionsContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap:10px;
+    margin-top: 20px;
+    /* background-color: purple; */
+}
+.optionsContainer label{
+    font-size: 18px;
+    cursor: pointer;
+}
+.optionsContainer input{
+    height: 16px;
+    width: 16px;
+    cursor: pointer;
+    border:none
+}
+.optionsContainer input:active{
+    outline: none;
+}
+.optionsContainer>div{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    /* background-color: aqua; */
+    padding: 5px 0;
+}
+form{
+    height:80%;
+    width: 80%;
+    margin: 0 auto;
+    /* background-color: red; */
 }
