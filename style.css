@@ -90,18 +90,20 @@ li.correct .correct-option{
     height: 16px;
     width: 16px;
     cursor: pointer;
-    border:none
+    border:none;
+    margin-top: 8px;
 }
 .optionsContainer input:active{
     outline: none;
 }
-.optionsContainer>div{
+.optionsContainer div label{
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 10px;
     /* background-color: aqua; */
-    padding: 5px 0;
+    padding: 5px 5px;
 }
+
 form{
     height:80%;
     width: 80%;

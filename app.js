@@ -7,7 +7,7 @@ const questionItems = [
   },
   {
     question: "What is you Name?",
-    options: ["Arqam", "Huzaif", "Yarik", "Asrar"],
+    options: ["Arqam", "Huzaif","This is something beyound your imagination which I cant tell and wont tell and will never tell even if i tell mean i did tell but never tell to tell all the people", "Yarik", "Asrar"],
     answer: "Arqam",
   },
   {
@@ -17,7 +17,7 @@ const questionItems = [
   },
   {
     question: "Do you know how to swim?",
-    options: ["Yes","No"],
+    options: ["Yes", "No"],
     answer: "Yes",
   },
 ];
@@ -41,14 +41,16 @@ questionItems.forEach((item, index) => {
   quizForm.appendChild(quizItem);
 });
 
-//inserting the submit button after each and every question has been appended. 
+//inserting the submit button after each and every question has been appended.
 quizForm.appendChild(submitBtn);
 
 let correctAns = [];
 quizForm.addEventListener("click", (e) => {
   const selectedOption = e.target;
   // console.log(selectedOption)
-  if (/*selectedOption.tagName === "LABEL" ||*/selectedOption.type === "radio") {
+  if (
+    /*selectedOption.tagName === "LABEL" ||*/ selectedOption.type === "radio"
+  ) {
     console.log(selectedOption);
     questionItems.forEach((item) => {
       if (selectedOption.id === item.answer) {
@@ -57,64 +59,77 @@ quizForm.addEventListener("click", (e) => {
         console.log(correctAns);
         console.log(selectedOption.closest("li"));
         return;
-      }
-      else{
+      } else {
         selectedOption.closest(".option").classList.add("incorrect-option");
       }
     });
   } else {
     console.log("not inside");
   }
-  if(selectedOption.classList.contains("submit-btn")){
+  if (selectedOption.classList.contains("submit-btn")) {
     e.preventDefault();
     evaluate();
-    console.log("btn click")
+    console.log("btn click");
   }
 });
 
 //function to evav result
-function evaluate(){
-  const li =document.querySelectorAll("li");//by default
-  li.forEach((item)=>{
-    item.classList.remove("correct");//reset
-    item.classList.add("incorrect");//by default
-  })
-  correctAns.forEach((item)=>{
-    item.classList.replace("incorrect","correct");
-  })
+function evaluate() {
+  const li = document.querySelectorAll("li"); //by default
+  li.forEach((item) => {
+    item.classList.remove("correct"); //reset
+    item.classList.add("incorrect"); //by default
+  });
+  correctAns.forEach((item) => {
+    item.classList.replace("incorrect", "correct");
+  });
 }
 
-
-//function to add quiz questions with answers
-//questionItem an object with Question, array of options and correct answer
+//function to add quiz questions with options
+//questionItem is an object with Question, array of options and the correct answer with its id.
 function quizQuestionItem(questionItem) {
   //container to hold quiz question
   const questionItemContainer = document.createElement("li");
+  questionItemContainer.classList.add("questionItem");
+
   //The question itself;
   const question = document.createElement("h4");
   question.textContent = questionItem.question;
   questionItemContainer.appendChild(question);
 
-  //Question options Container
-  const questionOptionsContainer = document.createElement("div");
-  questionOptionsContainer.classList.add("optionsContainer");
-  questionItemContainer.appendChild(questionOptionsContainer);
+  //questionitem options Container
+  const questionItemOptionsContainer = document.createElement("div");
+  questionItemOptionsContainer.classList.add("optionsContainer");
+  questionItemContainer.appendChild(questionItemOptionsContainer);
+
   //options
   questionItem.options.forEach((option) => {
-    const optionDiv = document.createElement("div");
-    optionDiv.classList.add("option");
-    const questionOption = document.createElement("input");
-    questionOption.type = "radio";
-    questionOption.name = questionItem.id;
-    questionOption.value = option;
-    questionOption.id = option;
-    const label = document.createElement("label");
-    label.htmlFor = option;
-    label.textContent = option;
-    label.id = option;
-    questionOptionsContainer.appendChild(optionDiv);
-    optionDiv.appendChild(questionOption);
-    optionDiv.appendChild(label);
+    //div to hold radio button with label
+    const QuestionItemOptionDiv = document.createElement("div");
+    QuestionItemOptionDiv.classList.add("option");
+    QuestionItemOptionDiv.id = option;
+    
+    //label
+    const questionOptionLabel = document.createElement("label");
+    // questionOptionLabel.htmlFor = option;
+    // questionOptionLabel.textContent = option;
+    // questionOptionLabel.id = option;
+    const labeltext = document.createElement("span");
+    labeltext.textContent=option;
+
+    //radio button
+    const questionOptionRadio = document.createElement("input");
+    questionOptionRadio.type = "radio";
+    questionOptionRadio.name = questionItem.id;
+    questionOptionRadio.value = option;
+    // questionOptionRadio.id = option;
+
+
+    //appending options into Li
+    questionItemOptionsContainer.appendChild(QuestionItemOptionDiv);
+    QuestionItemOptionDiv.appendChild(questionOptionLabel);
+    questionOptionLabel.appendChild(questionOptionRadio);
+    questionOptionLabel.appendChild(labeltext);
   });
 
   return questionItemContainer;
