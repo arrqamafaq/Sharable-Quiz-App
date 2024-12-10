@@ -27,6 +27,8 @@ const questionItems = [
   },
 ];
 
+//main
+const main = document.querySelector("main");
 //form
 const quizForm = document.querySelector("#quizForm");
 // creating a submit button to check the result
@@ -37,7 +39,7 @@ submitBtn.classList.add("submit-btn");
 
 //adding ID to each questionItem (kind of Question Number)
 questionItems.forEach((item, index) => {
-  item.id = index + 1;
+  item.id = `"${index}+1"`;
 
   //creating UI of each questionItem
   const quizItem = quizQuestionItem(item);
@@ -50,17 +52,23 @@ questionItems.forEach((item, index) => {
 quizForm.appendChild(submitBtn);
 
 //Event Listner for handling clicks
-let correctAns = [];
 quizForm.addEventListener("click", (e) => {
   const selectedOption = e.target.closest(".option");
   console.log(selectedOption);
-  //remove all the correct classes (reset)
 
   //handle click on option
   if (selectedOption) {
     const questionLi = selectedOption.closest("li");
+
+    //check if it has been already answered
+    if(questionLi.classList.contains("answered")){
+      console.log("Already Answered");
+      return;
+    }
+
+
     const questionId = questionLi.querySelector("input").name;
-    const correctAnswer = questionItems.find((q) => q.id == questionId).answer;
+    const correctAnswer = questionItems.find((q) => q.id === questionId).answer;
 
     // Reset classes for all options in the current question
     questionLi.querySelectorAll(".option").forEach((option) => {
@@ -71,19 +79,56 @@ quizForm.addEventListener("click", (e) => {
     if (selectedOption.id === correctAnswer) {
       selectedOption.classList.add("correct-option");
       questionLi.classList.add("correct");
+      questionLi.classList.remove("incorrect");
+      
     } else {
       selectedOption.classList.add("incorrect-option");
       questionLi.classList.add("incorrect");
+      questionLi.classList.remove("correct");
     }
 
-    if (selectedOption.classList.contains("submit-btn")) {
-      e.preventDefault();
-      evaluate();
-      console.log("btn click");
-    }
+    //marked state
+    questionLi.classList.add("answered");
   }
 });
+//submit button
+quizForm.addEventListener(("submit"),(e)=>{
+    e.preventDefault();
+    e.target.classList.add("submitted");
+    evaluate();
+    console.log("btn click");
+  
+})
 
+//popUp handle
+
+
+//function for popUp on submitting
+function popupOnSubmit(score,totalQuestions){
+  const popup= document.createElement("div");
+  popup.classList.add("popup");
+  //
+  const popupContent=document.createElement("div");
+  popupContent.classList.add("popupContent");
+  popup.appendChild(popupContent)
+  popupContent.innerHTML=`
+    <div class="close-icon">&#x2715;</div>
+    <h3>You got</h3>
+    <h4> ${score} correct out of ${totalQuestions}</h4>
+    `
+  popup.classList.add("open");
+  main.appendChild(popup);
+
+  //eventlistner on popUp
+  popup.addEventListener(("click"),(e)=>{
+    if(e.target.classList.contains("close-icon")){
+      popup.classList.remove("open");
+      quizForm.classList.remove("submitted");
+      main.removeChild(popup);
+    }
+  });
+
+}
 //function for reseting classes
 function resetClasses() {
   const li = document.querySelectorAll("li");
@@ -99,7 +144,15 @@ function resetClasses() {
 
 //function to evav result
 function evaluate() {
-  
+  let score =0;
+  const li = document.querySelectorAll('li');
+  li.forEach((item)=>{
+    if(item.classList.contains("correct")){
+      score++;
+    }
+  })
+  popupOnSubmit(score,li.length);
+  console.log("Your score is",score +"/"+li.length);
 
 }
 
