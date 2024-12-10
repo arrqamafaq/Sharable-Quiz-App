@@ -37,7 +37,7 @@ form.userInput{
     border-radius: 30px;
     margin: 40px 0;
     max-width:854px;
-    width: 70%;
+    width: 85%;
     padding: 20px;
     /* background-color: red; */
 }
@@ -86,7 +86,7 @@ section#questionList{
     box-shadow: rgba(167, 166, 166, 0.16) 0px 3px 6px, rgba(173, 173, 173, 0.452) 0px 3px 6px;
     border-radius:30px ;
     max-width:854px ;
-    width: 70%;
+    width: 85%;
     height: fit-content;
     text-align: center;
 }

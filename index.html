@@ -27,15 +27,15 @@
         <div class="questionItem">
           <label for="question">
             Enter your Question
-            <input type="text" id="question" />
+            <input type="text" id="question" required/>
           </label>
           <label for="options">
             Enter your Options (comma-seperated)
-            <input type="text" id="options" />
+            <input type="text" id="options" required/>
           </label>
           <label for="answer">
             Enter the correct answer
-            <input type="text" id="answer" />
+            <input type="text" id="answer" required />
           </label>
         </div>
         <button type="submit" id="addQuestion">Add Question</button>
@@ -45,7 +45,7 @@
         <ul id="questionDisplay"></ul>
       </section>
     </main>
+    <!-- <script type="module" src="app.js"></script> -->
     <script type="module" src="userInput.js"></script>
-    <script type="module" src="app.js"></script>
   </body>
 </html>
