@@ -1,13 +1,18 @@
 //sample data
 const questionItems = [
   {
-    question: "What city are you from?",
+    question: "Which city are you from?",
     options: ["Srinagar", "Delhi", "Mumbai"],
     answer: "Srinagar",
   },
   {
+    question: "Which city would you prefer to live in?",
+    options: ["Srinagar", "Delhi", "Mumbai"],
+    answer: "Mumbai",
+  },
+  {
     question: "What is you Name?",
-    options: ["Arqam", "Huzaif","This is something beyound your imagination which I cant tell and wont tell and will never tell even if i tell mean i did tell but never tell to tell all the people", "Yarik", "Asrar"],
+    options: ["Arqam", "Huzaif", "Yarik", "Asrar"],
     answer: "Arqam",
   },
   {
@@ -44,45 +49,58 @@ questionItems.forEach((item, index) => {
 //inserting the submit button after each and every question has been appended.
 quizForm.appendChild(submitBtn);
 
+//Event Listner for handling clicks
 let correctAns = [];
 quizForm.addEventListener("click", (e) => {
-  const selectedOption = e.target;
-  // console.log(selectedOption)
-  if (
-    /*selectedOption.tagName === "LABEL" ||*/ selectedOption.type === "radio"
-  ) {
-    console.log(selectedOption);
-    questionItems.forEach((item) => {
-      if (selectedOption.id === item.answer) {
-        correctAns.push(selectedOption.closest("li"));
-        selectedOption.closest(".option").classList.add("correct-option");
-        console.log(correctAns);
-        console.log(selectedOption.closest("li"));
-        return;
-      } else {
-        selectedOption.closest(".option").classList.add("incorrect-option");
-      }
+  const selectedOption = e.target.closest(".option");
+  console.log(selectedOption);
+  //remove all the correct classes (reset)
+
+  //handle click on option
+  if (selectedOption) {
+    const questionLi = selectedOption.closest("li");
+    const questionId = questionLi.querySelector("input").name;
+    const correctAnswer = questionItems.find((q) => q.id == questionId).answer;
+
+    // Reset classes for all options in the current question
+    questionLi.querySelectorAll(".option").forEach((option) => {
+      option.classList.remove("correct-option", "incorrect-option");
     });
-  } else {
-    console.log("not inside");
-  }
-  if (selectedOption.classList.contains("submit-btn")) {
-    e.preventDefault();
-    evaluate();
-    console.log("btn click");
+
+    // Add correct or incorrect class based on the selection
+    if (selectedOption.id === correctAnswer) {
+      selectedOption.classList.add("correct-option");
+      questionLi.classList.add("correct");
+    } else {
+      selectedOption.classList.add("incorrect-option");
+      questionLi.classList.add("incorrect");
+    }
+
+    if (selectedOption.classList.contains("submit-btn")) {
+      e.preventDefault();
+      evaluate();
+      console.log("btn click");
+    }
   }
 });
 
+//function for reseting classes
+function resetClasses() {
+  const li = document.querySelectorAll("li");
+  li.forEach((item) => {
+    item.classList.remove("correct","incorrect");
+  });
+
+  const option = document.querySelectorAll(".option");
+  option.forEach((item) => {
+    item.classList.remove("correct-option","incorrect-option");
+  });
+}
+
 //function to evav result
 function evaluate() {
-  const li = document.querySelectorAll("li"); //by default
-  li.forEach((item) => {
-    item.classList.remove("correct"); //reset
-    item.classList.add("incorrect"); //by default
-  });
-  correctAns.forEach((item) => {
-    item.classList.replace("incorrect", "correct");
-  });
+  
+
 }
 
 //function to add quiz questions with options
@@ -108,14 +126,14 @@ function quizQuestionItem(questionItem) {
     const QuestionItemOptionDiv = document.createElement("div");
     QuestionItemOptionDiv.classList.add("option");
     QuestionItemOptionDiv.id = option;
-    
+
     //label
     const questionOptionLabel = document.createElement("label");
     // questionOptionLabel.htmlFor = option;
     // questionOptionLabel.textContent = option;
     // questionOptionLabel.id = option;
     const labeltext = document.createElement("span");
-    labeltext.textContent=option;
+    labeltext.textContent = option;
 
     //radio button
     const questionOptionRadio = document.createElement("input");
@@ -123,7 +141,6 @@ function quizQuestionItem(questionItem) {
     questionOptionRadio.name = questionItem.id;
     questionOptionRadio.value = option;
     // questionOptionRadio.id = option;
-
 
     //appending options into Li
     questionItemOptionsContainer.appendChild(QuestionItemOptionDiv);

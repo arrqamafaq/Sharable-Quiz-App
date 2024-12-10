@@ -10,13 +10,14 @@ html,body{
     font-family: "Playwrite PE", sans-serif,serif;
     background-color: #161616;
     color: white;
+    /* overflow: hidden; */
 }
 header{
     /* background-color: pink; */
     padding: 32px;
     min-height: 20%;
     text-align: center;
-    color: #cf83fcaf;
+    /* color: #cf83fcaf; */
     font-family: "Playwrite PE", sans-serif,serif;
     font-size: 1.5vw;
     display: flex;
@@ -105,8 +106,10 @@ li.correct .correct-option{
 }
 
 form{
-    height:80%;
+    height:100%;
     width: 80%;
+    /* padding: 5vh; */
     margin: 0 auto;
     /* background-color: red; */
+    /* overflow-y:auto ; */
 }
