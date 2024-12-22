@@ -1,3 +1,4 @@
+// import { questionItems } from "./userInput.js";
 //sample data
 const questionItems = [
   {
@@ -26,7 +27,9 @@ const questionItems = [
     answer: "Yes",
   },
 ];
-window.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => {
+  console.log(questionItems);
+
   //main
   const main = document.querySelector("main");
   //form
@@ -154,7 +157,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
   //function to add quiz questions with options
   //questionItem is an object with Question, array of options and the correct answer with its id.
-  export function quizQuestionItem(questionItem) {
+  function quizQuestionItem(questionItem) {
     //container to hold quiz question
     const questionItemContainer = document.createElement("li");
     questionItemContainer.classList.add("questionItem");
