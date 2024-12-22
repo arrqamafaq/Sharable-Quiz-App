@@ -1,5 +1,3 @@
-export const questionItems = [];
-
 //form
 document.addEventListener("DOMContentLoaded", () => {
   const userinputForm = document.querySelector(".userInput");
@@ -7,6 +5,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const addQuestionBtn = document.querySelector("#addQuestion");
   //display added questions
   const questionDisplay = document.querySelector("#questionDisplay");
+  let quizName = "firstQuiz";
+  const questionItems = loadQuestionItems(quizName);
+  addItemToUi();
+
+  
   //eventListner
   userinputForm.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -28,24 +31,23 @@ document.addEventListener("DOMContentLoaded", () => {
     // console.log(tooltipDiv);
 
     //answer validation with options
-    const messageContainer= document.querySelector(".answerValidation");
-    const existingMessage=document.querySelector(".answerValidationMessage");
+    const messageContainer = document.querySelector(".answerValidation");
+    const existingMessage = document.querySelector(".answerValidationMessage");
 
-    // options.filter(())
-    if(options.includes(answer)){
+    // check if answer entered is present in options provided
+    if (options.includes(answer)) {
       //answer is valid
       questionItems.push({ question, options, answer });
       resetInputFields();
       existingMessage?.remove();
       addItemToUi();
-    }
-    else{
+    } else {
       //answer is invalid
       existingMessage?.remove();
       messageContainer.appendChild(answerValMessage);
       console.log("Answer does't match with any of the options");
     }
-   
+
     //add to array
     console.log(questionItems);
   });
@@ -56,7 +58,12 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelector("#answer").value = "";
   }
   //function appending added question into the ul(added questions)
+
   function addItemToUi() {
+    if (questionItems.length > 0) {
+      document.querySelector(".createQuizBtn").style.display = "initial";
+      createQuiz(quizName);
+    }
     //clearing the ul
     questionDisplay.innerHTML = "";
     questionItems.forEach((item) => {
@@ -113,5 +120,25 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     return questionItemContainer;
+  }
+
+  //function to createQuiz
+  function createQuiz(quizName) {
+    const createBtn = document.querySelector(".createQuizBtn");
+    createBtn.addEventListener("click", () => {
+      console.log("clicked ceratequiz");
+      saveQuestionItems(quizName);
+      questionDisplay.innerHTML="";
+    });
+  }
+  //function to save questionItems to local Storage
+  function saveQuestionItems(quizName) {
+    const questionItemsJson = JSON.stringify(questionItems);
+    localStorage.setItem(`"${quizName}"`, questionItemsJson);
+  }
+  //function to load savedQuestions from local Strorage.
+  function loadQuestionItems(quizName) {
+    const questionItemsArray = localStorage.getItem(`"${quizName}"`) || "[]";
+    return JSON.parse(questionItemsArray);
   }
 });

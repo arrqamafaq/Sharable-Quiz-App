@@ -13,7 +13,7 @@ html,body{
     /* overflow: hidden; */
 }
 main{
-    padding: 50px 0;
+    padding: 50px 10px;
 }
 header{
     /* background-color: pink; */
@@ -28,8 +28,9 @@ header{
     align-items: center;
 }
 li{
+    /* background-color: red; */
     list-style: none;
-    width:70%;
+    width:100%;
     max-width: 854px;
     background-color: rgb(32, 32, 32);
     padding:20px 30px;
@@ -117,7 +118,7 @@ li.answered input,li.answered label{
 
 form{
     height:100%;
-    width: 80%;
+    width: 90%;
     /* padding: 5vh; */
     margin: 0 auto;
     /* background-color: red; */
