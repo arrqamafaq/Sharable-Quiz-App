@@ -242,6 +242,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (window.location.pathname.includes("/Sharable-Quiz-App/")) {
       basePath += "/Sharable-Quiz-App";
     }
+    console.log(basePath);
     // Generate the sharable link
     const shareableLink = `${basePath}/quizApp.html?quiz=${encodedQuizData}`;
 
