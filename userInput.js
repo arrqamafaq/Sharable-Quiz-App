@@ -42,27 +42,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const answer = document.querySelector("#answer").value.trim();
     if (!inpValidate(answer, "Answer")) return;
 
-    const answerValMessage = document.createElement("p");
-    answerValMessage.classList.add("answerValidationMessage");
-    answerValMessage.textContent =
-      "Your answer doesn't match with the options provided";
-
-    //answer validation with options
-    const messageContainer = document.querySelector(".answerValidation");
-    const existingMessage = document.querySelector(".answerValidationMessage");
-
-    // check if answer entered is present in options provided
-    if (options.includes(answer)) {
-      //answer is valid
+    if (validateAnswer(answer, options)) {
       questionItems.push({ question, options, answer });
       resetInputFields();
-      existingMessage?.remove();
       addItemToUi();
     } else {
-      //answer is invalid
-      existingMessage?.remove();
-      messageContainer.appendChild(answerValMessage);
-      console.log("Answer does't match with any of the options");
+      return;
     }
 
     //add to array
@@ -83,6 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     return true;
   }
+
   // Function to validate options as comma-separated values
   function validateOptions(optionsInput) {
     // Check if the input contains at least one comma
@@ -94,8 +80,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // Split, trim, and remove empty options
     const optionsArray = optionsInput
       .split(",")
-      .map((opt) => opt.trim())
-      .filter((opt) => opt);
+      .map((opt) => opt.trim()) //maps into an array
+      .filter((opt) => opt); //removes empty string
 
     // Ensure all options are non-empty
     if (optionsArray.length < 2) {
@@ -104,6 +90,32 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     return optionsArray;
+  }
+
+  //function to validate if answer matches to options provided
+  function validateAnswer(answer, options) {
+    //a message element for validation feedback
+    const answerValMessage = document.createElement("p");
+    answerValMessage.classList.add("answerValidationMessage");
+    answerValMessage.textContent =
+      "Your answer doesn't match with the options provided";
+
+    //answer validation with options
+    const messageContainer = document.querySelector(".answerValidation");
+    const existingMessage = document.querySelector(".answerValidationMessage");
+
+    // check if answer entered is present in options provided
+    if (options.includes(answer)) {
+      //answer is valid
+      existingMessage?.remove();
+      return true;
+    } else {
+      //answer is invalid
+      existingMessage?.remove(); //clear any previous messages
+      messageContainer.appendChild(answerValMessage);
+      console.log("Answer does't match with any of the options.");
+      return false;
+    }
   }
 
   //function appending added question into the ul(added questions)
