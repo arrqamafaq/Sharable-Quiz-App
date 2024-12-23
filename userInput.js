@@ -235,8 +235,15 @@ document.addEventListener("DOMContentLoaded", () => {
     //encode quizdata into queryString
     const encodedQuizData = encodeURIComponent(JSON.stringify(questionItems));
 
+    // Determine base URL dynamically
+    let basePath = window.location.origin;
+
+    // Add GitHub Pages path if running on GitHub Pages
+    if (window.location.pathname.includes("/Sharable-Quiz-App/")) {
+      basePath += "/Sharable-Quiz-App";
+    }
     // Generate the sharable link
-    const shareableLink = `${window.location.origin}/quizApp.html?quiz=${encodedQuizData}`;
+    const shareableLink = `${basePath}/quizApp.html?quiz=${encodedQuizData}`;
 
     // Display the sharable link
     const linkContainer = document.querySelector("#shareableLinkContainer");
@@ -251,25 +258,23 @@ document.addEventListener("DOMContentLoaded", () => {
     copyLinkButton.textContent = "Click to Copy";
     linkContainer.appendChild(copyLinkButton);
 
-    copyLinkButton.addEventListener("click",async()=>{
-      try{
+    copyLinkButton.addEventListener("click", async () => {
+      try {
         //copy the sharable link to clipboard
         await navigator.clipboard.writeText(shareableLink);
         //show a confirmation message
-        alert("link copied to clipboard! you will be redirected shortly or click on the link")
-      
+        alert(
+          "link copied to clipboard! you will be redirected shortly or click on the link"
+        );
+
         //redirect after 4 secs.
         setTimeout(() => {
           // Optionally redirect to quizApp.html
           window.location.href = shareableLink;
         }, 2000);
-      
+      } catch (error) {
+        alert("Failed to copy link. Please copy manually.");
       }
-      catch(error){
-        alert("Failed to copy link. Please copy manually.")
-      }
-    })
-
-   
+    });
   }
 });
