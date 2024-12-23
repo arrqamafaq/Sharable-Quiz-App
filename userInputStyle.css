@@ -157,7 +157,42 @@ li h4 {
   display: none;
 }
 
-#quizName:disabled{
-    cursor: not-allowed;
-    opacity: 0.3;
+#quizName:disabled {
+  cursor: not-allowed;
+  opacity: 0.3;
+}
+.shareableLinkContainer {
+  margin: 15px auto;
+  background-color: #cf83fcaf;
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  border-radius: 15px;
+  gap: 40px;
+}
+.shareableLinkContainer a {
+  text-decoration: none;
+  font-family: "Poppins", sans-serif, serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+  &:hover {
+    color: black;
+  }
+}
+#copyLinkButton {
+  font-family: "Poppins", sans-serif, serif;
+  font-size: 12px;
+  font-weight: 400;
+  border-radius: 20px;
+  padding: 8px 10px;
+  cursor: pointer;
+  border: none;
+}
+#copyLinkButton:hover {
+  opacity: 0.8;
+  background-color: black;
+  color: white;
 }

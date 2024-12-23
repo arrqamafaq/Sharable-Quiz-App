@@ -6,13 +6,15 @@ document.addEventListener("DOMContentLoaded", () => {
   //display added questions
   const questionDisplay = document.querySelector("#questionDisplay");
   //quiz name
-  const quizNameInput = document.querySelector("#quizName"); // Input for quiz name
+  const quizTitleInput = document.querySelector("#quizName"); // Input for quiz name
   // let quizName = "firstQuiz";
   let questionItems = [];
-  let currentQuizName = null;
+
+  //key for the quiz
+  const quizNameNew = "questionItems";
 
   // Enable quiz name input initially
-  quizNameInput.disabled = false;
+  quizTitleInput.disabled = false;
   // questionItems = loadQuestionItems(quizName);
   // addItemToUi();
 
@@ -20,15 +22,13 @@ document.addEventListener("DOMContentLoaded", () => {
   userinputForm.addEventListener("submit", (e) => {
     e.preventDefault();
     //Get the current quiz name
-    const quizName = quizNameInput.value.trim();
+    const quizName = quizTitleInput.value.trim();
     if (!quizName) {
       alert("Please specify a unique name for your quiz.");
       return;
     }
-    //setting the current quizname
-    currentQuizName = quizName;
     //disabling the quizName once entered
-    quizNameInput.disabled = true;
+    quizTitleInput.disabled = true;
 
     // Get question, options, and answer from inputs
     const question = document.querySelector("#question").value.trim();
@@ -187,31 +187,29 @@ document.addEventListener("DOMContentLoaded", () => {
   const createBtn = document.querySelector(".createQuizBtn");
   createBtn.addEventListener("click", () => {
     console.log("clicked create quiz");
-    createQuiz(currentQuizName);
+    // createQuiz(currentQuizName);
+    createQuiz(quizNameNew);
+    encodeQuizData();
+    resetForm();
   });
 
   //function to createQuiz
   function createQuiz(quizName) {
-    // Check if a quiz with the same name exists
-    if (localStorage.getItem(quizName)) {
-      if (!confirm("A quiz with this name already exists. Overwrite it?")) {
-        return;
-      }
-    }
-
     //saving the quiz questionItems array to localStorage on creating quiz
     saveQuestionItems(quizName);
     alert(`Quiz "${quizName}" has been created successfully!`);
-    resetForm();
   }
 
   function resetForm() {
     questionItems = [];
     // currentQuizName = null;
-    quizNameInput.disabled = false;
-    quizNameInput.value = "";
+    quizTitleInput.disabled = false;
+    quizTitleInput.value = "";
     questionDisplay.innerHTML = "";
-    // createQuizBtn.style.display = "none";
+    const createQuizBtn = document.querySelector(".createQuizBtn");
+    if (createQuizBtn) {
+      createQuizBtn.style.display = "none";
+    }
   }
   //function to save questionItems to local Storage
   function saveQuestionItems(quizName) {
@@ -222,5 +220,56 @@ document.addEventListener("DOMContentLoaded", () => {
   function loadQuestionItems(quizName) {
     const questionItemsArray = localStorage.getItem(quizName) || "[]";
     return JSON.parse(questionItemsArray);
+  }
+
+  //function to encode quiz data into url
+  function encodeQuizData() {
+    // Retrieve quiz data from local storage
+    const questionItems = loadQuestionItems(quizNameNew);
+
+    if (!questionItems || questionItems.length === 0) {
+      alert("No questions available to create a quiz.");
+      return;
+    }
+
+    //encode quizdata into queryString
+    const encodedQuizData = encodeURIComponent(JSON.stringify(questionItems));
+
+    // Generate the sharable link
+    const shareableLink = `quizApp.html?quiz=${encodedQuizData}`;
+
+    // Display the sharable link
+    const linkContainer = document.querySelector("#shareableLinkContainer");
+    linkContainer.classList.add("shareableLinkContainer");
+    const link = document.createElement("div");
+    link.innerHTML = `<a href="${shareableLink}" target="_blank">Click on the icon to copy the Quiz link address and share it with your friends</a>`;
+    linkContainer.appendChild(link);
+
+    // create a copy button
+    const copyLinkButton = document.createElement("button");
+    copyLinkButton.id = "copyLinkButton";
+    copyLinkButton.textContent = "Click to Copy";
+    linkContainer.appendChild(copyLinkButton);
+
+    copyLinkButton.addEventListener("click",async()=>{
+      try{
+        //copy the sharable link to clipboard
+        await navigator.clipboard.writeText(shareableLink);
+        //show a confirmation message
+        alert("link copied to clipboard! you will be redirected shortly or click on the link")
+      
+        //redirect after 4 secs.
+        setTimeout(() => {
+          // Optionally redirect to quizApp.html
+          window.location.href = shareableLink;
+        }, 2000);
+      
+      }
+      catch(error){
+        alert("Failed to copy link. Please copy manually.")
+      }
+    })
+
+   
   }
 });
