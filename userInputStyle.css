@@ -156,3 +156,8 @@ li h4 {
   margin: 10px 0;
   display: none;
 }
+
+#quizName:disabled{
+    cursor: not-allowed;
+    opacity: 0.3;
+}

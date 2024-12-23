@@ -5,30 +5,50 @@ document.addEventListener("DOMContentLoaded", () => {
   const addQuestionBtn = document.querySelector("#addQuestion");
   //display added questions
   const questionDisplay = document.querySelector("#questionDisplay");
-  let quizName = "firstQuiz";
-  const questionItems = loadQuestionItems(quizName);
-  addItemToUi();
+  //quiz name
+  const quizNameInput = document.querySelector("#quizName"); // Input for quiz name
+  // let quizName = "firstQuiz";
+  let questionItems = [];
+  let currentQuizName = null;
 
-  
+  // Enable quiz name input initially
+  quizNameInput.disabled = false;
+  // questionItems = loadQuestionItems(quizName);
+  // addItemToUi();
+
   //eventListner
   userinputForm.addEventListener("submit", (e) => {
     e.preventDefault();
+    //Get the current quiz name
+    const quizName = quizNameInput.value.trim();
+    if (!quizName) {
+      alert("Please specify a unique name for your quiz.");
+      return;
+    }
+    //setting the current quizname
+    currentQuizName = quizName;
+    //disabling the quizName once entered
+    quizNameInput.disabled = true;
+
+    // Get question, options, and answer from inputs
     const question = document.querySelector("#question").value.trim();
+    if (!inpValidate(question, "Question")) return;
+
     const options = document
       .querySelector("#options")
       .value.split(",")
-      .map((opt) => opt.trim());
+      .map((opt) => opt.trim())
+      .filter((opt) => opt); // Remove empty strings;
+    if (!inpValidate(options, "Options")) return;
     console.log("options", options);
-    const answer = document.querySelector("#answer").value.trim();
 
-    //tooltip for answer validation
-    // const tooltipDiv = document.createElement("div");
+    const answer = document.querySelector("#answer").value.trim();
+    if (!inpValidate(answer, "Answer")) return;
+
     const answerValMessage = document.createElement("p");
     answerValMessage.classList.add("answerValidationMessage");
     answerValMessage.textContent =
       "Your answer doesn't match with the options provided";
-    // tooltipDiv.appendChild(answerValMessage);
-    // console.log(tooltipDiv);
 
     //answer validation with options
     const messageContainer = document.querySelector(".answerValidation");
@@ -57,14 +77,19 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelector("#options").value = "";
     document.querySelector("#answer").value = "";
   }
-  //function appending added question into the ul(added questions)
 
-  function addItemToUi() {
-    if (questionItems.length > 0) {
-      document.querySelector(".createQuizBtn").style.display = "initial";
-      createQuiz(quizName);
+  //function for input validation
+  function inpValidate(inputField, fieldName) {
+    if (!inputField || (Array.isArray(inputField) && inputField.length === 0)) {
+      alert(`${fieldName} can't be empty`);
+      return false;
     }
-    //clearing the ul
+    return true;
+  }
+
+  //function appending added question into the ul(added questions)
+  function addItemToUi() {
+    //clearing the ul inorder to remove duplicate elements
     questionDisplay.innerHTML = "";
     questionItems.forEach((item) => {
       console.log(item);
@@ -72,6 +97,12 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log("Question item logged in ui", questionItem);
       questionDisplay.appendChild(questionItem);
     });
+    //display create button
+    if (questionItems.length > 0) {
+      document.querySelector(".createQuizBtn").style.display = "initial";
+    }
+
+    // resetForm();
   }
   //function to add quiz questions with options
   //questionItem is an object with Question, array of options and the correct answer with its id.
@@ -122,23 +153,43 @@ document.addEventListener("DOMContentLoaded", () => {
     return questionItemContainer;
   }
 
+  const createBtn = document.querySelector(".createQuizBtn");
+  createBtn.addEventListener("click", () => {
+    console.log("clicked create quiz");
+    createQuiz(currentQuizName);
+  });
+
   //function to createQuiz
   function createQuiz(quizName) {
-    const createBtn = document.querySelector(".createQuizBtn");
-    createBtn.addEventListener("click", () => {
-      console.log("clicked ceratequiz");
-      saveQuestionItems(quizName);
-      questionDisplay.innerHTML="";
-    });
+    // Check if a quiz with the same name exists
+    if (localStorage.getItem(quizName)) {
+      if (!confirm("A quiz with this name already exists. Overwrite it?")) {
+        return;
+      }
+    }
+
+    //saving the quiz questionItems array to localStorage on creating quiz
+    saveQuestionItems(quizName);
+    alert(`Quiz "${quizName}" has been created successfully!`);
+    resetForm();
+  }
+
+  function resetForm() {
+    questionItems = [];
+    // currentQuizName = null;
+    quizNameInput.disabled = false;
+    quizNameInput.value = "";
+    questionDisplay.innerHTML = "";
+    // createQuizBtn.style.display = "none";
   }
   //function to save questionItems to local Storage
   function saveQuestionItems(quizName) {
     const questionItemsJson = JSON.stringify(questionItems);
-    localStorage.setItem(`"${quizName}"`, questionItemsJson);
+    localStorage.setItem(quizName, questionItemsJson);
   }
   //function to load savedQuestions from local Strorage.
   function loadQuestionItems(quizName) {
-    const questionItemsArray = localStorage.getItem(`"${quizName}"`) || "[]";
+    const questionItemsArray = localStorage.getItem(quizName) || "[]";
     return JSON.parse(questionItemsArray);
   }
 });
