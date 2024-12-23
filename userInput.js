@@ -239,7 +239,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let basePath = window.location.origin;
 
     // Add GitHub Pages path if running on GitHub Pages
-    if (window.location.pathname.includes("arrqamafaq.github.io")) {
+    if (basePath.includes("arrqamafaq.github.io")) {
       basePath += "/Sharable-Quiz-App";
     }
     console.log(basePath);
