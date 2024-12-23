@@ -1,33 +1,27 @@
 // import { questionItems } from "./userInput.js";
-//sample data
-const questionItems = [
-  {
-    question: "Which city are you from?",
-    options: ["Srinagar", "Delhi", "Mumbai"],
-    answer: "Srinagar",
-  },
-  {
-    question: "Which city would you prefer to live in?",
-    options: ["Srinagar", "Delhi", "Mumbai"],
-    answer: "Mumbai",
-  },
-  {
-    question: "What is you Name?",
-    options: ["Arqam", "Huzaif", "Yarik", "Asrar"],
-    answer: "Arqam",
-  },
-  {
-    question: "What is your year of birth?",
-    options: ["1999", "2000", "2001", "2002"],
-    answer: "2002",
-  },
-  {
-    question: "Do you know how to swim?",
-    options: ["Yes", "No"],
-    answer: "Yes",
-  },
-];
+
 document.addEventListener("DOMContentLoaded", () => {
+
+  // Extract the quiz data from the query string
+  const urlParams = new URLSearchParams(window.location.search);
+  const encodedQuizData = urlParams.get("quiz");
+  let questionItems;
+  if (encodedQuizData) {
+      // Decode and parse the quiz data
+      questionItems = JSON.parse(decodeURIComponent(encodedQuizData));
+      console.log("Loaded Quiz Data:", questionItems);
+      
+      // Use questionItems to generate the quiz
+      // (Existing logic to render quiz goes here)
+  } else {
+      alert("No quiz data found. Please create a quiz first.");
+  }
+
+
+
+
+
+
   console.log(questionItems);
 
   //main
