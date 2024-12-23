@@ -34,12 +34,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const question = document.querySelector("#question").value.trim();
     if (!inpValidate(question, "Question")) return;
 
-    const options = document
-      .querySelector("#options")
-      .value.split(",")
-      .map((opt) => opt.trim())
-      .filter((opt) => opt); // Remove empty strings;
-    if (!inpValidate(options, "Options")) return;
+    const optionsInput = document.querySelector("#options").value.trim();
+    const options = validateOptions(optionsInput);
+    if (!options) return; // stop if option validation fails
     console.log("options", options);
 
     const answer = document.querySelector("#answer").value.trim();
@@ -80,11 +77,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
   //function for input validation
   function inpValidate(inputField, fieldName) {
-    if (!inputField || (Array.isArray(inputField) && inputField.length === 0)) {
+    if (!inputField) {
       alert(`${fieldName} can't be empty`);
       return false;
     }
     return true;
+  }
+  // Function to validate options as comma-separated values
+  function validateOptions(optionsInput) {
+    // Check if the input contains at least one comma
+    if (!optionsInput.includes(",")) {
+      alert("Options must be separated by commas.");
+      return false;
+    }
+
+    // Split, trim, and remove empty options
+    const optionsArray = optionsInput
+      .split(",")
+      .map((opt) => opt.trim())
+      .filter((opt) => opt);
+
+    // Ensure all options are non-empty
+    if (optionsArray.length < 2) {
+      alert("Provide at least two valid options, separated by commas.");
+      return false;
+    }
+
+    return optionsArray;
   }
 
   //function appending added question into the ul(added questions)
