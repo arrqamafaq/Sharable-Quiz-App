@@ -1,26 +1,20 @@
 // import { questionItems } from "./userInput.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-
   // Extract the quiz data from the query string
   const urlParams = new URLSearchParams(window.location.search);
   const encodedQuizData = urlParams.get("quiz");
   let questionItems;
   if (encodedQuizData) {
-      // Decode and parse the quiz data
-      questionItems = JSON.parse(decodeURIComponent(encodedQuizData));
-      console.log("Loaded Quiz Data:", questionItems);
-      
-      // Use questionItems to generate the quiz
-      // (Existing logic to render quiz goes here)
+    // Decode and parse the quiz data
+    questionItems = JSON.parse(decodeURIComponent(encodedQuizData));
+    console.log("Loaded Quiz Data:", questionItems);
+
+    // Use questionItems to generate the quiz
+    // (Existing logic to render quiz goes here)
   } else {
-      alert("No quiz data found. Please create a quiz first.");
+    alert("No quiz data found. Please create a quiz first.");
   }
-
-
-
-
-
 
   console.log(questionItems);
 

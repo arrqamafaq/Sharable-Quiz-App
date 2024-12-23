@@ -236,7 +236,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const encodedQuizData = encodeURIComponent(JSON.stringify(questionItems));
 
     // Generate the sharable link
-    const shareableLink = `quizApp.html?quiz=${encodedQuizData}`;
+    const shareableLink = `${window.location.origin}/quizApp.html?quiz=${encodedQuizData}`;
 
     // Display the sharable link
     const linkContainer = document.querySelector("#shareableLinkContainer");
