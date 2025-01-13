@@ -1,49 +1,72 @@
+:root {
+  --primary-light: hsl(280, 82%, 97%);
+  --primary-main: hsl(280, 60%, 50%);
+  --primary-dark: hsl(280, 55%, 45%);
+  --background-dark: hsl(280, 15%, 10%);
+  --surface-dark: hsl(280, 15%, 15%);
+  --text-primary: hsl(0, 0%, 100%);
+  --text-secondary: hsl(0, 0%, 80%);
+  --accent-purple: hsl(280, 70%, 75%);
+  --shadow-color: rgba(207, 131, 252, 0.15);
+}
+
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
 }
+
 html,
 body {
   width: 100%;
   height: 100%;
-  /* font-family: "poppins",sans-serif, serif; */
-  font-family: "Poppins", "inter", sans-serif, serif;
-  background-color: #161616;
-  color: white;
-  /* overflow: hidden; */
+  font-family: "Poppins", sans-serif;
+  background-color: var(--background-dark);
+  color: var(--text-primary);
 }
+
 main {
   padding: 10px 20px;
   width: 100%;
   height: 100%;
   display: flex;
-  /* justify-content: center; */
   align-items: center;
   flex-direction: column;
-  /* background-color: pink; */
 }
+
 header {
   height: fit-content;
-  font-family: "Playwrite PE", sans-serif,serif;
+  font-family: "Poppins", sans-serif;
   padding: 5px 5px;
-  /* background-color: orange; */
-  font-size: 1.5vw;
+  font-size: clamp(1.5rem, 1.5vw, 2.5rem);
   text-align: center;
-  /* margin: auto 0; */
+  background: linear-gradient(
+    135deg,
+    var(--accent-purple),
+    var(--primary-main)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
+
 form.userInput {
-  /* height: 60%; */
-  background-color: rgb(32, 32, 32);
-  box-shadow: rgba(167, 166, 166, 0.16) 0px 3px 6px,
-    rgba(173, 173, 173, 0.452) 0px 3px 6px;
+  background: var(--surface-dark);
+  box-shadow: 0 8px 32px var(--shadow-color);
   border-radius: 30px;
   margin: 40px 0;
   max-width: 854px;
   width: 85%;
   padding: 20px;
-  /* background-color: red; */
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform 0.3s ease;
 }
+
+form.userInput:hover {
+  transform: translateY(-5px);
+}
+
 form.userInput label {
   display: flex;
   flex-direction: column;
@@ -52,126 +75,97 @@ form.userInput label {
   font-size: 22px;
   gap: 10px;
   margin-bottom: 10px;
-  /* width: 100%; */
   text-align: center;
+  color: var(--text-secondary);
 }
+
 form.userInput input {
   width: 100%;
   padding: 10px 20px;
   outline: none;
   font-size: 16px;
-  font-family: "Poppins", sans-serif, serif;
-  font-weight: 800;
-  background-color: rgba(235, 233, 233, 0.616);
-  color: black;
-  border: none;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  background-color: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 20px;
+  transition: all 0.3s ease;
 }
+
+form.userInput input:focus {
+  border-color: var(--accent-purple);
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
 form.userInput button {
   font-size: 18px;
-  font-family: "Poppins", sans-serif, serif;
-  font-weight: 800;
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
   padding: 10px 20px;
   border-radius: 20px;
-  background-color: #cf83fcaf;
+  background: linear-gradient(
+    135deg,
+    var(--accent-purple),
+    var(--primary-main)
+  );
   border: none;
-  color: white;
+  color: var(--text-primary);
   cursor: pointer;
   position: relative;
   left: 50%;
   margin: 10px 0;
   transform: translateX(-50%);
-  &:hover{
-    opacity: .8;
-  }
+  transition: all 0.3s ease;
 }
 
+form.userInput button:hover {
+  transform: translateX(-50%) translateY(-2px);
+  box-shadow: 0 5px 15px var(--shadow-color);
+}
 section#questionList {
-  padding: 15px;
-  background-color: rgb(32, 32, 32);
-  box-shadow: rgba(167, 166, 166, 0.16) 0px 3px 6px,
-    rgba(173, 173, 173, 0.452) 0px 3px 6px;
-  border-radius: 30px;
   max-width: 854px;
   width: 85%;
   height: fit-content;
   text-align: center;
-  /* margin-bottom: 1000px; */
-}
-.answerValidationMessage {
-  font-size: 14px;
-  color: red;
-}
-li {
-  list-style: none;
-  width: 70%;
-  max-width: 854px;
-  background-color: rgb(32, 32, 32);
-  padding: 20px 20px;
-  box-shadow: rgba(167, 166, 166, 0.16) 0px 3px 6px,
-    rgba(173, 173, 173, 0.452) 0px 3px 6px;
-  border-radius: 30px;
-  margin: 40px auto;
-  pointer-events: none;
-}
-li h4 {
-  font-size: 22px;
-  font-weight: 500;
-  text-align: left;
-  padding: 0 5px;
-}
-.optionsContainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  gap: 10px;
-  margin-top: 20px;
-  /* background-color: purple; */
-}
-.optionsContainer label {
-  font-size: 18px;
-  cursor: pointer;
-}
-.optionsContainer input {
-  height: 16px;
-  width: 16px;
-  cursor: pointer;
-  border: none;
-  margin-top: 10px;
-}
-.optionsContainer div label {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  /* background-color: aqua; */
-  padding: 5px 5px;
 }
 
 .createQuizBtn {
   font-size: 18px;
-  font-family: "Poppins", sans-serif, serif;
-  font-weight: 800;
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
   padding: 10px 20px;
   border-radius: 20px;
-  background-color: #cf83fcaf;
+  background: linear-gradient(
+    135deg,
+    var(--accent-purple),
+    var(--primary-main)
+  );
   border: none;
-  color: white;
+  color: var(--text-primary);
   cursor: pointer;
   margin: 10px 0;
   display: none;
-  &:hover{
-    opacity: .8;
-  }
+  transition: all 0.3s ease;
+}
+
+.createQuizBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px var(--shadow-color);
 }
 
 #quizName:disabled {
   cursor: not-allowed;
   opacity: 0.3;
 }
+
 .shareableLinkContainer {
   margin: 15px auto;
-  background-color: #cf83fcaf;
+  background: linear-gradient(
+    135deg,
+    var(--accent-purple),
+    var(--primary-main)
+  );
   width: fit-content;
   display: flex;
   align-items: center;
@@ -179,34 +173,115 @@ li h4 {
   padding: 8px 16px;
   border-radius: 15px;
   gap: 40px;
+  box-shadow: 0 5px 15px var(--shadow-color);
 }
+
 .shareableLinkContainer a {
   text-decoration: none;
-  font-family: "Poppins", sans-serif, serif;
+  font-family: "Poppins", sans-serif;
   font-size: 16px;
-  font-weight: 600;
-  color: white;
-  &:hover {
-    color: black;
-  }
+  font-weight: 500;
+  color: var(--text-primary);
+  transition: opacity 0.3s ease;
+}
+
+.shareableLinkContainer a:hover {
+  opacity: 0.8;
+}
+.answerValidationMessage {
+  font-size: 14px;
+  color: red;
 }
 #copyLinkButton {
-  font-family: "Poppins", sans-serif, serif;
+  font-family: "Poppins", sans-serif;
   font-size: 12px;
   font-weight: 400;
   border-radius: 20px;
   padding: 8px 10px;
   cursor: pointer;
   border: none;
-}
-#copyLinkButton:hover {
-  opacity: 0.8;
-  background-color: black;
-  color: white;
+  background: rgba(255, 255, 255, 0.2);
+  color: var(--text-primary);
+  transition: all 0.3s ease;
 }
 
-@media (max-width:1000px) {
-  header{
-      font-size: 18px;
+#copyLinkButton:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+li {
+  list-style: none;
+  width: 100%;
+  max-width: 854px;
+  background: var(--surface-dark);
+  padding: 20px 30px;
+  box-shadow: 0 8px 32px var(--shadow-color);
+  border-radius: 30px;
+  margin: 40px auto;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform 0.3s ease;
+  cursor: not-allowed;
+  pointer-events: none;
+  word-break: break-all;
+}
+
+li h4 {
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--text-primary);
+  text-align: left;
+  word-break: break-all;
+}
+
+.optionsContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.optionsContainer label {
+  font-size: 18px;
+  cursor: pointer;
+  color: var(--text-secondary);
+  transition: color 0.3s ease;
+  text-align: left;
+  word-break: break-all;
+}
+
+.optionsContainer label:hover {
+  color: var(--text-primary);
+}
+.optionsContainer input {
+  height: 16px;
+  width: 16px;
+  cursor: pointer;
+  border: none;
+  margin-top: 8px;
+  accent-color: var(--accent-purple);
+}
+
+.optionsContainer input:active {
+  outline: none;
+}
+
+.optionsContainer div label {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 5px;
+}
+
+@media (max-width: 1000px) {
+  header {
+    font-size: 18px;
+  }
+
+  .shareableLinkContainer {
+    flex-direction: column;
+    gap: 20px;
+    padding: 15px;
   }
 }
