@@ -4,6 +4,11 @@ A simple web-based application that allows users to create quizzes, share them w
 That too without a backend.
 ---
 
+## Live Demo
+
+You can view the live app here: https://arrqamafaq.github.io/Sharable-Quiz-App
+
+---
 ## Features
 
 - **Quiz Creation**: Users can create custom quizzes by entering questions, options, and correct answers.
@@ -18,11 +23,6 @@ That too without a backend.
 ![Screenshot from 2025-01-13 13-43-12](https://github.com/user-attachments/assets/98b5ce8a-ad7d-4aec-af3a-727fa1bec39f)
 ![Screenshot from 2025-01-13 13-43-23](https://github.com/user-attachments/assets/fa31606a-f753-4f77-b530-b7d7e1c1a9f2)
 
-
----
-## Live Demo
-
-You can view the live app here: https://arrqamafaq.github.io/Sharable-Quiz-App
 
 
 ---
